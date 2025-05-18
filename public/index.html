@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head><title>Spotify to YT Music</title></head>
+<body>
+  <h1>Transfer Playlist</h1>
+  <form id="transferForm">
+    <input type="text" placeholder="Spotify Token" id="token"><br>
+    <input type="text" placeholder="Playlist ID" id="playlist"><br>
+    <button type="submit">Transfer</button>
+  </form>
+
+  <script>
+    document.getElementById('transferForm').onsubmit = async (e) => {
+      e.preventDefault();
+      const token = document.getElementById('token').value;
+      const playlist = document.getElementById('playlist').value;
+
+      const res = await fetch('/api/transfer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ spotifyToken: token, playlistId: playlist })
+      });
+
+      const data = await res.json();
+      alert(data.success ? "Success!" : "Failed!");
+    };
+  </script>
+</body>
+</html>
